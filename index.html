@@ -3,137 +3,141 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>株式会社Ambitious | 北海道ニセコ周辺の不動産・建築デザイン</title>
-    <!-- 谷歌高端字体库 -->
+    <title>株式会社Ambitious | 北海道ニセコ不動产・建筑设计</title>
+    
+    <!-- 引入高端字体 -->
     <link href="https://fonts.googleapis.com/css2?family=Cormorant:wght@400;600&family=Zen+Kaku+Gothic+New:wght@400;700&display=swap" rel="stylesheet">
+    
     <style>
+        /* --- 变量定义 --- */
         :root {
-            --gold: #D1AC00;
-            --gold-hover: #b59500;
-            --dark: #1a1a1a;
-            --light-bg: #f8f8f8;
+            --brand-gold: #D1AC00;
+            --brand-gold-hover: #b59500;
+            --dark-bg: #1a1a1a;
+            --light-bg: #fdfdfd;
             --text-main: #333;
             --font-en: 'Cormorant', serif;
             --font-jp: 'Zen Kaku Gothic New', sans-serif;
         }
 
-        /* 基础重置 */
+        /* --- 基础重置 --- */
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { 
             font-family: var(--font-jp); 
             line-height: 1.8; 
             color: var(--text-main); 
             background: #fff;
-            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
         }
         a { text-decoration: none; color: inherit; transition: 0.3s; }
         ul { list-style: none; }
-        img { max-width: 100%; height: auto; display: block; }
+        img { max-width: 100%; height: auto; display: block; border-radius: 2px; }
 
-        /* 公用排版类 */
-        .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
-        .section-padding { padding: 120px 0; }
-        .gold-text { color: var(--gold) !important; }
+        /* --- 通用组件 --- */
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 30px; }
+        .section-padding { padding: 100px 0; }
         
-        /* 标题设计 */
-        .section-title { text-align: center; margin-bottom: 80px; }
+        .section-title { text-align: center; margin-bottom: 70px; }
         .section-title .en { 
             display: block; 
             font-family: var(--font-en); 
-            font-size: 3rem; 
-            color: var(--gold);
+            font-size: 3.2rem; 
+            color: var(--brand-gold);
             letter-spacing: 0.1em;
-            margin-bottom: 10px;
+            line-height: 1;
         }
-        .section-title .jp { font-size: 1.6rem; font-weight: 700; letter-spacing: 0.15em; }
+        .section-title .jp { font-size: 1.4rem; font-weight: 700; letter-spacing: 0.2em; margin-top: 10px; }
 
-        /* 按钮设计 */
         .btn-gold {
             display: inline-block;
-            background: var(--gold);
+            background: var(--brand-gold);
             color: #fff !important;
-            padding: 15px 60px;
-            font-weight: bold;
-            letter-spacing: 0.1em;
-            border: 1px solid var(--gold);
+            padding: 16px 60px;
+            font-weight: 700;
+            letter-spacing: 0.15em;
+            border: none;
+            cursor: pointer;
+            transition: 0.4s ease;
         }
-        .btn-gold:hover { background: var(--gold-hover); border-color: var(--gold-hover); }
+        .btn-gold:hover { background: var(--brand-gold-hover); transform: translateY(-2px); box-shadow: 0 10px 20px rgba(209,172,0,0.2); }
 
         /* --- 头部导航 --- */
         header {
-            position: fixed;
-            top: 0; width: 100%; height: 90px;
-            background: rgba(255,255,255,0.95);
+            position: fixed; top: 0; width: 100%; height: 85px;
+            background: rgba(255,255,255,0.98);
             display: flex; align-items: center; justify-content: space-between;
             padding: 0 50px; z-index: 1000;
-            box-shadow: 0 2px 15px rgba(0,0,0,0.05);
+            border-bottom: 1px solid #eee;
         }
-        .logo h1 { font-size: 1.4rem; font-weight: 700; }
-        nav ul { display: flex; gap: 30px; }
-        nav ul li a { font-size: 14px; font-weight: 700; color: #1a1a1a; }
-        nav ul li a:hover { color: var(--gold); }
+        .logo h1 { font-size: 1.3rem; font-weight: 700; letter-spacing: 0.05em; }
+        nav ul { display: flex; gap: 35px; }
+        nav ul li a { font-size: 13px; font-weight: 700; color: #1a1a1a; }
+        nav ul li a:hover { color: var(--brand-gold); }
 
-        /* --- KV (模拟主视) --- */
+        /* --- Hero 主视觉 --- */
         .hero {
-            height: 100vh;
-            background: linear-gradient(rgba(0,0,0,0.2), rgba(0,0,0,0.2)), 
-                        url('https://images.unsplash.com/photo-1548777123-e216912df7d8?q=80&w=2000') center/cover;
+            height: 90vh;
+            background: linear-gradient(rgba(0,0,0,0.25), rgba(0,0,0,0.25)), 
+                        url('https://images.unsplash.com/photo-1512917774080-9991f1c4c750?q=80&w=2000') center/cover no-repeat;
             display: flex; align-items: center; justify-content: center;
             text-align: center; color: #fff;
         }
-        .hero h2 { font-size: 3.5rem; letter-spacing: 0.3em; font-weight: 400; line-height: 1.5; }
+        .hero h2 { font-size: 3.8rem; letter-spacing: 0.25em; font-weight: 400; line-height: 1.4; }
+        .hero p { font-size: 1.1rem; letter-spacing: 0.5em; margin-bottom: 25px; }
 
-        /* --- About Section --- */
-        .flex-box { display: flex; align-items: center; gap: 80px; }
-        .flex-box > div { flex: 1; }
-        .about-text h3 { font-size: 1.8rem; margin-bottom: 30px; border-left: 5px solid var(--gold); padding-left: 20px; }
-        .about-text p { margin-bottom: 30px; font-size: 0.95rem; }
+        /* --- 关于 (About) --- */
+        .flex-box { display: flex; align-items: center; gap: 100px; flex-wrap: wrap; }
+        .flex-box > div { flex: 1; min-width: 400px; }
+        .about-text h3 { font-size: 2rem; margin-bottom: 30px; border-left: 6px solid var(--brand-gold); padding-left: 25px; }
+        .about-text p { font-size: 1rem; color: #555; margin-bottom: 40px; }
 
-        /* --- Property Grid --- */
-        .property-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; }
-        .card { background: var(--light-bg); transition: 0.4s; position: relative; overflow: hidden; }
-        .card:hover { transform: translateY(-10px); }
-        .card .img-box { height: 250px; background: #ddd; overflow: hidden; }
-        .card .info { padding: 30px; }
-        .card .tag { color: var(--gold); font-size: 12px; font-weight: bold; margin-bottom: 10px; display: block; }
-        .card h4 { font-size: 1.1rem; margin-bottom: 15px; }
+        /* --- 物件展示 (Property) --- */
+        .property-section { background: var(--light-bg); }
+        .property-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 40px; }
+        .card { background: #fff; box-shadow: 0 5px 30px rgba(0,0,0,0.03); overflow: hidden; }
+        .card img { transition: 0.6s; height: 260px; object-fit: cover; width: 100%; }
+        .card:hover img { transform: scale(1.08); }
+        .card .content { padding: 35px; }
+        .card .tag { color: var(--brand-gold); font-size: 12px; font-weight: 700; margin-bottom: 12px; display: block; }
+        .card h4 { font-size: 1.25rem; margin-bottom: 20px; letter-spacing: 0.05em; }
+        .card .read-more { font-weight: 700; font-size: 13px; color: var(--brand-gold); }
 
-        /* --- Flow (流程序) --- */
-        .flow-container { display: flex; flex-direction: column; gap: 20px; }
+        /* --- 流程 (Flow) --- */
+        .flow-container { max-width: 900px; margin: 0 auto; }
         .flow-step { 
-            display: flex; align-items: flex-start; gap: 40px; 
-            padding: 40px; background: var(--light-bg); border-left: 10px solid var(--gold);
+            display: flex; gap: 50px; padding: 45px; background: #fff;
+            border-bottom: 1px solid #f0f0f0; transition: 0.3s;
         }
-        .step-num { font-family: var(--font-en); font-size: 2.5rem; color: var(--gold); line-height: 1; }
-        .step-content h4 { font-size: 1.3rem; margin-bottom: 10px; }
+        .flow-step:hover { background: #fffdf5; }
+        .step-num { font-family: var(--font-en); font-size: 3.2rem; color: var(--brand-gold); font-weight: 600; opacity: 0.8; }
+        .flow-step h4 { font-size: 1.4rem; margin-bottom: 15px; color: #1a1a1a; }
+        .flow-step p { font-size: 0.95rem; color: #666; }
 
-        /* --- Footer --- */
-        footer { background: var(--dark); color: #fff; padding: 100px 0 30px; }
-        .footer-main { display: flex; justify-content: space-between; margin-bottom: 80px; }
-        .footer-info h2 { font-size: 1.8rem; margin-bottom: 20px; }
-        .footer-info p { opacity: 0.7; font-size: 14px; }
+        /* --- 页脚 (Footer) --- */
+        footer { background: var(--dark-bg); color: #fff; padding: 100px 0 40px; }
+        .footer-flex { display: flex; justify-content: space-between; align-items: flex-start; gap: 50px; }
+        .footer-info h2 { font-size: 1.8rem; margin-bottom: 25px; }
+        .footer-info p { opacity: 0.7; font-size: 14px; line-height: 2.2; }
         .footer-contact { text-align: right; }
-        .footer-tel { font-size: 2rem; color: var(--gold); font-weight: bold; }
-        .copyright { text-align: center; font-size: 12px; opacity: 0.4; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 30px; }
+        .footer-tel { font-size: 2.5rem; color: var(--brand-gold); font-weight: 700; display: block; margin-bottom: 20px; }
+        .copyright { text-align: center; margin-top: 80px; font-size: 12px; opacity: 0.4; padding-top: 30px; border-top: 1px solid rgba(255,255,255,0.1); }
 
-        /* 响应式调整 */
-        @media (max-width: 1024px) {
-            .flex-box { flex-direction: column; }
-            .property-grid { grid-template-columns: repeat(2, 1fr); }
-            header { padding: 0 20px; }
-            nav { display: none; } /* 简化版：移动端隐藏主导航 */
-        }
+        /* --- 响应式 --- */
         @media (max-width: 768px) {
-            .hero h2 { font-size: 2rem; }
-            .property-grid { grid-template-columns: 1fr; }
-            .footer-main { flex-direction: column; text-align: center; gap: 40px; }
+            header { padding: 0 20px; }
+            nav { display: none; } /* 移动端暂时隐藏菜单 */
+            .hero h2 { font-size: 2.2rem; }
+            .flex-box { gap: 40px; }
+            .flex-box > div { min-width: 100%; }
+            .footer-flex { flex-direction: column; text-align: center; }
             .footer-contact { text-align: center; }
+            .footer-tel { font-size: 1.8rem; }
         }
     </style>
 </head>
 <body>
 
-    <!-- 导航 -->
+    <!-- 导航栏 -->
     <header>
         <div class="logo">
             <h1>株式会社Ambitious</h1>
@@ -144,102 +148,103 @@
                 <li><a href="#property">PROPERTY</a></li>
                 <li><a href="#flow">FLOW</a></li>
                 <li><a href="#company">COMPANY</a></li>
-                <li style="border:1px solid #D1AC00; padding: 5px 15px;"><a href="#contact" class="gold-text">CONTACT</a></li>
+                <li><a href="#contact" style="color: var(--brand-gold);">CONTACT</a></li>
             </ul>
         </nav>
     </header>
 
-    <!-- 主视觉 -->
+    <!-- 主视觉区 -->
     <section class="hero">
-        <div class="hero-inner">
-            <p style="letter-spacing: 0.6em; margin-bottom: 20px;">HOKKAIDO NISEKO</p>
+        <div>
+            <p>HOKKAIDO NISEKO</p>
             <h2>理想に寄り添う<br>特別な一棟を提案</h2>
         </div>
     </section>
 
-    <!-- 关于 -->
+    <!-- 关于我们 (About) -->
     <section id="about" class="container section-padding">
         <div class="flex-box">
             <div class="about-img">
                 <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=1200" alt="建筑理念">
             </div>
             <div class="about-text">
-                <div class="section-title" style="text-align: left; margin-bottom: 40px;">
+                <div class="section-title" style="text-align: left; margin-bottom: 30px;">
                     <span class="en">About</span>
-                    <p class="jp">技術が光る高品質な住まい</p>
+                    <span class="jp">技術が光る高品質な住まい</span>
                 </div>
                 <h3>想いを形にする住まいづくり</h3>
                 <p>
-                    注文住宅による新築やリフォームをメインに、不動産の幅広いご相談を承っております。
                     ニセコの地域に密着したサービスを展開しており、非日常的な空間に浸る高級志向の別荘や中古物件のリフォームなどを得意としています。
+                    お客様の理想を共有しながら、デザインや設備にこだわりのある方にも満足いただける一棟を作り上げます。
                 </p>
-                <a href="#" class="btn-gold">コンセプトを詳しく見る</a>
+                <a href="#contact" class="btn-gold">コンセプトを見る</a>
             </div>
         </div>
     </section>
 
-    <!-- 自社物件 -->
-    <section id="property" class="section-padding" style="background: #fbfbfb;">
+    <!-- 自社物件 (Property) -->
+    <section id="property" class="property-section section-padding">
         <div class="container">
             <div class="section-title">
                 <span class="en">Property</span>
-                <h2 class="jp">自社物件・施工事例</h2>
+                <span class="jp">自社物件・施工事例</span>
             </div>
             <div class="property-grid">
                 <div class="card">
-                    <div class="img-box" style="background: url('https://images.unsplash.com/photo-1512917774080-9991f1c4c750?q=80&w=800') center/cover;"></div>
-                    <div class="info">
+                    <img src="https://images.unsplash.com/photo-1512917774080-9991f1c4c750?q=80&w=800" alt="物件1">
+                    <div class="read-more" style="position: absolute; top: 20px; left: 20px; background: var(--brand-gold); color: white; padding: 5px 15px; font-size: 12px;">NEW</div>
+                    <div class="content">
                         <span class="tag">#Executive Suite</span>
                         <h4>倶知安町山田56 プレミアム別荘</h4>
-                        <a href="#" class="gold-text">READ MORE →</a>
+                        <a href="#" class="read-more">DETAILS →</a>
                     </div>
                 </div>
                 <div class="card">
-                    <div class="img-box" style="background: url('https://images.unsplash.com/photo-1518780664697-55e3ad937233?q=80&w=800') center/cover;"></div>
-                    <div class="info">
+                    <img src="https://images.unsplash.com/photo-1518780664697-55e3ad937233?q=80&w=800" alt="物件2">
+                    <div class="content">
                         <span class="tag">#Premium Suite</span>
                         <h4>ニセコ町近藤 デザイナーズ住宅</h4>
-                        <a href="#" class="gold-text">READ MORE →</a>
+                        <a href="#" class="read-more">DETAILS →</a>
                     </div>
                 </div>
                 <div class="card">
-                    <div class="img-box" style="background: url('https://images.unsplash.com/photo-1449156001935-d2863cb32f30?q=80&w=800') center/cover;"></div>
-                    <div class="info">
+                    <img src="https://images.unsplash.com/photo-1449156001935-d2863cb32f30?q=80&w=800" alt="物件3">
+                    <div class="content">
                         <span class="tag">#Comfort Suite</span>
                         <h4>倶知安町樺山33 森の中の別荘</h4>
-                        <a href="#" class="gold-text">READ MORE →</a>
+                        <a href="#" class="read-more">DETAILS →</a>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- 购入流程 -->
+    <!-- 流程 (Flow) -->
     <section id="flow" class="container section-padding">
         <div class="section-title">
             <span class="en">Flow</span>
-            <h2 class="jp">購入・建築の流れ</h2>
+            <span class="jp">購入・建築の流れ</span>
         </div>
         <div class="flow-container">
             <div class="flow-step">
                 <div class="step-num">01</div>
-                <div class="step-content">
+                <div>
                     <h4>お問い合わせ・初回相談</h4>
                     <p>まずはお客様の詳しいご依頼内容をお問い合わせや初回相談から承っております。</p>
                 </div>
             </div>
             <div class="flow-step">
                 <div class="step-num">02</div>
-                <div class="step-content">
+                <div>
                     <h4>物件紹介・現地案内</h4>
-                    <p>ニセコの地域からご要望にぴったりの土地や物件を提案、現地内見を行って検討いただけます。</p>
+                    <p>ニセコの地域からご要望にぴったりの土地を提案したり、現地案内や内見を行います。</p>
                 </div>
             </div>
             <div class="flow-step">
                 <div class="step-num">03</div>
-                <div class="step-content">
+                <div>
                     <h4>建築プランのご提案</h4>
-                    <p>お客様の想いをデザインし、理想の住まいづくりを目指す完全注文住宅方式を採用しています。</p>
+                    <p>お客様の想いをデザインし、それぞれの理想の住まいづくりを目指すプランを提案します。</p>
                 </div>
             </div>
         </div>
@@ -247,25 +252,21 @@
 
     <!-- 页脚 -->
     <footer id="company">
-        <div class="container">
-            <div class="footer-main">
-                <div class="footer-info">
-                    <h2>株式会社Ambitious</h2>
-                    <p>〒063-0863 北海道札幌市西区八軒三条東４丁目１−１</p>
-                    <p>特定建設業：北海道知事許可 石（特-30）第13587号</p>
-                    <p>宅地建物取引業：北海道知事 石狩（2）第8448号</p>
-                </div>
-                <div class="footer-contact">
-                    <p style="margin-bottom: 10px;">お電話でのお問い合わせ</p>
-                    <a href="tel:0118877887" class="footer-tel">011-887-7887</a>
-                    <div style="margin-top: 30px;">
-                        <a href="#" class="btn-gold">お問い合わせフォーム</a>
-                    </div>
-                </div>
+        <div class="container footer-flex">
+            <div class="footer-info">
+                <h2>株式会社Ambitious</h2>
+                <p>〒063-0863 北海道札幌市西区八軒三条東４丁目１−１</p>
+                <p>特定建設業：北海道知事許可 石（特-30）第13587号</p>
+                <p>宅地建物取引業：北海道知事 石狩（2）第8448号</p>
             </div>
-            <div class="copyright">
-                Copyright © 株式会社Ambitious All Rights Reserved.
+            <div class="footer-contact">
+                <p style="margin-bottom: 10px; opacity: 0.8;">お電話でのお問い合わせ</p>
+                <a href="tel:0118877887" class="footer-tel">011-887-7887</a>
+                <a href="#" class="btn-gold">お問い合わせフォーム</a>
             </div>
+        </div>
+        <div class="copyright">
+            Copyright © 株式会社Ambitious All Rights Reserved.
         </div>
     </footer>
 
