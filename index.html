@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>株式会社Ambitious | 北海道ニセコ不動産・建築デザイン</title>
+    <title>株式会社Ambitious | 北海道不動産・建築デザイン</title>
     
     <!-- 引入高档字体库 -->
     <link href="https://fonts.googleapis.com/css2?family=Cormorant:wght@400;600&family=Noto+Sans+JP:wght@400;700&display=swap" rel="stylesheet">
@@ -28,46 +28,42 @@
         a { text-decoration: none; color: inherit; transition: 0.3s ease; }
         img { max-width: 100%; height: auto; display: block; }
 
-        .container { max-width: 1300px; margin: 0 auto; padding: 0 40px; }
-        .section-padding { padding: 120px 0; }
-        .gold-text { color: var(--gold) !important; }
-
-        /* --- 顶部导航栏 (重点修改部分) --- */
+        /* --- 顶部导航栏 (Header) 布局调整 --- */
         header {
             position: fixed; top: 0; width: 100%; height: 100px;
             background: rgba(255,255,255,0.98);
-            display: grid; 
-            grid-template-columns: 1fr auto 1fr; /* 左、中、右三列布局 */
-            align-items: center; 
-            padding: 0 40px; z-index: 1000;
+            display: grid;
+            grid-template-columns: 1fr auto 1fr; /* 三列：左文字、中Logo、右菜单 */
+            align-items: center;
+            padding: 0 50px; z-index: 1000;
             border-bottom: 1px solid #eee;
         }
 
-        /* 左侧：两行文字 */
+        /* 左侧文字样式 */
         .header-left .logo-text { line-height: 1.2; }
         .header-left .logo-text .en { 
-            font-family: var(--font-serif); font-size: 1.2rem; color: var(--gold); 
+            font-family: var(--font-serif); font-size: 1.3rem; color: var(--gold); 
             letter-spacing: 0.1em; display: block; font-weight: 600;
         }
         .header-left .logo-text .jp { 
-            font-size: 0.8rem; letter-spacing: 0.15em; display: block; font-weight: 700;
+            font-size: 0.8rem; letter-spacing: 0.2rem; display: block; font-weight: 700; color: #333;
         }
 
-        /* 中间：Logo图片 */
+        /* 中间 Logo 图片样式 */
         .header-center .nav-logo {
-            height: 60px; /* 调整导航栏Logo高度 */
+            height: 70px; /* 控制导航栏 Logo 的显示高度 */
             width: auto;
         }
 
-        /* 右侧：菜单 */
+        /* 右侧菜单样式 */
         .header-right { display: flex; justify-content: flex-end; }
-        nav ul { display: flex; gap: 20px; }
-        nav ul li a { font-size: 12px; font-weight: 700; letter-spacing: 0.05em; white-space: nowrap; }
+        nav ul { display: flex; gap: 30px; }
+        nav ul li a { font-size: 13px; font-weight: 700; letter-spacing: 0.08em; }
         nav ul li a:hover { color: var(--gold); }
 
         /* --- KV (Hero) --- */
         .hero {
-            height: 80vh;
+            height: 75vh;
             background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), 
                         url('https://images.unsplash.com/photo-1548777123-e216912df7d8?q=80&w=2000') center/cover;
             display: flex; align-items: center; justify-content: center;
@@ -75,11 +71,15 @@
         }
         .hero h2 { font-size: 3.5rem; letter-spacing: 0.2em; font-weight: 400; line-height: 1.4; }
 
-        /* --- Property (图片替换部分) --- */
-        .property-section { background: var(--gray-bg); }
+        /* --- Property 部分 --- */
+        .property-section { background: var(--gray-bg); padding: 100px 0; }
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+        .section-header { text-align: center; margin-bottom: 60px; }
+        .section-header h2 { font-family: var(--font-serif); font-size: 3rem; color: var(--gold); }
+
         .prop-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; }
-        .prop-card { background: var(--white); overflow: hidden; box-shadow: 0 5px 15px rgba(0,0,0,0.05); }
-        .prop-card .img-box { height: 300px; overflow: hidden; }
+        .prop-card { background: var(--white); overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.05); }
+        .prop-card .img-box { height: 350px; overflow: hidden; }
         .prop-card img { width: 100%; height: 100%; object-fit: cover; transition: 0.5s; }
         .prop-card:hover img { transform: scale(1.1); }
         .prop-card .info { padding: 25px; }
@@ -88,7 +88,8 @@
         /* 移动端适配 */
         @media (max-width: 1024px) {
             header { grid-template-columns: 1fr auto; padding: 0 20px; }
-            .header-right { display: none; } /* 移动端隐藏菜单，可后续加汉堡按钮 */
+            .header-right { display: none; } /* 移动端隐藏菜单 */
+            .prop-grid { grid-template-columns: 1fr; }
         }
     </style>
 </head>
@@ -96,7 +97,7 @@
 
     <!-- 顶部导航栏 -->
     <header>
-        <!-- 左侧：文字 -->
+        <!-- 左侧：两行文字 -->
         <div class="header-left">
             <div class="logo-text">
                 <span class="en">REAL ESTATE</span>
@@ -104,19 +105,21 @@
             </div>
         </div>
 
-        <!-- 中间：Logo图片嵌入点 -->
+        <!-- 中间：Logo图片嵌入 -->
         <div class="header-center">
-            <img src="ambitious_logo_fix-03.png" alt="Ambitious Logo" class="nav-logo">
+            <a href="/">
+                <img src="ambitious_logo_fix-03.png" alt="Ambitious Logo" class="nav-logo">
+            </a>
         </div>
 
-        <!-- 右侧：导航菜单 -->
+        <!-- 右侧：限定菜单 -->
         <div class="header-right">
             <nav>
                 <ul>
-                    <li><a href="#about">CONCEPT</a></li>
+                    <li><a href="#concept">CONCEPT</a></li>
                     <li><a href="#property">PROPERTY</a></li>
-                    <li><a href="#flow">FLOW</a></li>
-                    <li><a href="#contact" class="gold-text">CONTACT</a></li>
+                    <li><a href="#company">COMPANY</a></li>
+                    <li><a href="#contact" style="color: var(--gold);">CONTACT</a></li>
                 </ul>
             </nav>
         </div>
@@ -125,58 +128,61 @@
     <!-- 主视觉 -->
     <section class="hero">
         <div class="hero-inner">
-            <p style="letter-spacing: 0.5em;">HOKKAIDO NISEKO</p>
+            <p style="letter-spacing: 0.5em; margin-bottom: 10px;">HOKKAIDO NISEKO</p>
             <h2>理想に寄り添う<br>特別な一棟を提案</h2>
         </div>
     </section>
 
-    <!-- 物件展示区域 (Property) -->
-    <section id="property" class="property-section section-padding">
+    <!-- 物件列表 (Property) -->
+    <section id="property" class="property-section">
         <div class="container">
-            <div style="text-align: center; margin-bottom: 60px;">
-                <h2 style="font-family: var(--font-serif); font-size: 3rem; color: var(--gold);">Property</h2>
+            <div class="section-header">
+                <h2>Property</h2>
                 <p>自社物件・施工事例</p>
             </div>
             
             <div class="prop-grid">
-                <!-- 第一张照片位置 -->
+                <!-- 物件 1: 1外観.png.jpg -->
                 <div class="prop-card">
                     <div class="img-box">
                         <img src="1外観.png.jpg" alt="1外観">
                     </div>
                     <div class="info">
-                        <span class="gold-text" style="font-size: 12px; font-weight: 700;">#Exterior</span>
+                        <span style="color: var(--gold); font-size: 12px; font-weight: bold;">#Exterior</span>
                         <h4>倶知安町 プレミアム別荘</h4>
                     </div>
                 </div>
 
-                <!-- 第二张照片位置 -->
+                <!-- 物件 2: Outside_View.jpg -->
                 <div class="prop-card">
                     <div class="img-box">
                         <img src="Outside_View.jpg" alt="Outside View">
                     </div>
                     <div class="info">
-                        <span class="gold-text" style="font-size: 12px; font-weight: 700;">#View</span>
+                        <span style="color: var(--gold); font-size: 12px; font-weight: bold;">#Modern</span>
                         <h4>ニセコ町 デザイナーズ住宅</h4>
                     </div>
                 </div>
 
-                <!-- 第三张照片位置 -->
+                <!-- 物件 3: エントラス2.JPG -->
                 <div class="prop-card">
                     <div class="img-box">
                         <img src="エントラス2.JPG" alt="Entrance 2">
                     </div>
                     <div class="info">
-                        <span class="gold-text" style="font-size: 12px; font-weight: 700;">#Entrance</span>
-                        <h4>倶知安町 森の中の別荘</h4>
+                        <span style="color: var(--gold); font-size: 12px; font-weight: bold;">#Entrance</span>
+                        <h4>倶知安町 樺山・森の別荘</h4>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <footer style="background: #1a1a1a; color: white; padding: 40px 0; text-align: center;">
-        <p>Copyright © 株式会社Ambitious All Rights Reserved.</p>
+    <footer style="background: #1a1a1a; color: white; padding: 60px 0; text-align: center;">
+        <div class="container">
+            <p>株式会社Ambitious</p>
+            <p style="font-size: 12px; opacity: 0.4; margin-top: 20px;">Copyright © Ambitious All Rights Reserved.</p>
+        </div>
     </footer>
 
 </body>
