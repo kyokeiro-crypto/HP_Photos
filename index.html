@@ -63,13 +63,17 @@
 
         /* --- 导航 --- */
         header {
-            position: fixed; top: 0; width: 100%; height: 90px;
+            position: fixed; top: 0; width: 100%; height: 100px;
             background: rgba(255,255,255,0.98);
             display: flex; align-items: center; justify-content: space-between;
             padding: 0 60px; z-index: 1000;
             border-bottom: 1px solid #eee;
         }
-        .logo { font-size: 1.4rem; font-weight: 700; }
+        /* 修改左上角Logo文字样式 */
+        .logo { line-height: 1.2; font-weight: 700; }
+        .logo .en { font-family: var(--font-serif); font-size: 1.2rem; color: var(--gold); letter-spacing: 0.05em; display: block; }
+        .logo .jp { font-size: 0.9rem; letter-spacing: 0.1em; display: block; }
+
         nav ul { display: flex; gap: 30px; }
         nav ul li a { font-size: 13px; font-weight: 700; letter-spacing: 0.05em; }
         nav ul li a:hover { color: var(--gold); }
@@ -77,13 +81,17 @@
         /* --- KV (Hero) --- */
         .hero {
             height: 100vh;
-            background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), 
+            background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), 
                         url('https://images.unsplash.com/photo-1548777123-e216912df7d8?q=80&w=2000') center/cover;
             display: flex; align-items: center; justify-content: center;
             text-align: center; color: var(--white);
         }
-        .hero h2 { font-size: 4rem; letter-spacing: 0.2em; font-weight: 400; line-height: 1.4; }
-        .hero p { font-size: 1rem; letter-spacing: 0.5em; margin-bottom: 20px; }
+        /* 中间Logo容器 */
+        .hero-logo-box { margin-bottom: 30px; }
+        .hero-logo-box img { max-width: 350px; margin: 0 auto; filter: brightness(0) invert(1); } /* filter使黑logo变白，若logo本身有颜色可删掉 */
+        
+        .hero h2 { font-size: 3.5rem; letter-spacing: 0.2em; font-weight: 400; line-height: 1.4; }
+        .hero p { font-size: 1rem; letter-spacing: 0.5em; margin-bottom: 10px; }
 
         /* --- About (错位布局) --- */
         .about-wrap { display: flex; align-items: center; gap: 100px; }
@@ -103,7 +111,7 @@
         .property-section { background: var(--gray-bg); }
         .prop-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; }
         .prop-card { background: var(--white); overflow: hidden; position: relative; }
-        .prop-card img { height: 300px; width: 100%; object-fit: cover; transition: 0.5s; }
+        .prop-card img { height: 350px; width: 100%; object-fit: cover; transition: 0.5s; }
         .prop-card:hover img { transform: scale(1.1); }
         .prop-card .info { padding: 30px; }
         .prop-card .tag { color: var(--gold); font-size: 12px; font-weight: 700; margin-bottom: 10px; display: block; }
@@ -131,11 +139,12 @@
             .about-wrap { flex-direction: column; }
             .prop-grid { grid-template-columns: repeat(2, 1fr); }
             header { padding: 0 20px; }
-            nav { display: none; } /* 移动端折叠菜单逻辑简化 */
+            nav { display: none; } 
         }
         @media (max-width: 768px) {
             .prop-grid { grid-template-columns: 1fr; }
             .hero h2 { font-size: 2.2rem; }
+            .hero-logo-box img { max-width: 200px; }
             .footer-flex { flex-direction: column; gap: 50px; text-align: center; }
             .footer-links ul { grid-template-columns: 1fr; }
             .footer-tel { font-size: 2rem; }
@@ -146,7 +155,11 @@
 
     <!-- 头部导航 -->
     <header>
-        <div class="logo">株式会社Ambitious</div>
+        <!-- 修改左上角部分 -->
+        <div class="logo">
+            <span class="en">REAL ESTATE</span>
+            <span class="jp">北海道不動産</span>
+        </div>
         <nav>
             <ul>
                 <li><a href="#about">CONCEPT</a></li>
@@ -162,6 +175,10 @@
     <!-- KV 海报 -->
     <section class="hero">
         <div class="hero-inner">
+            <!-- 页面中间放Logo -->
+            <div class="hero-logo-box">
+                <img src="ambitious_logo_fix-03.png" alt="Ambitious Logo">
+            </div>
             <p>HOKKAIDO NISEKO</p>
             <h2>理想に寄り添う<br>特別な一棟を提案</h2>
         </div>
@@ -179,7 +196,7 @@
                     <p style="font-weight: 700; letter-spacing: 0.1em;">技術が光る高品質な住まい</p>
                 </div>
                 <h3>お客様の想いを形にする住まいづくり</h3>
-                <p>注文住宅による新築やリフォームをメインに、不動産の幅広いご相談を承っております。ニセコの地域に密着したサービスを展開しており、非日常的な空間に浸る高級志向の別荘や中古物件のリフォームなどを得意としています。</p>
+                <p>注文住宅による新築やリフォームをメインに、不動産の幅広いご相談を承っております。ニセコの地域に密着した服务を展開しており、非日常的な空間に浸る高級志向の別荘や中古物件のリフォームなどを得意としています。</p>
                 <a href="#" class="btn" style="margin-top: 30px;">コンセプトを詳しく見る</a>
             </div>
         </div>
@@ -193,24 +210,27 @@
                 <h2 class="jp-ttl">自社物件・施工事例</h2>
             </div>
             <div class="prop-grid">
+                <!-- 替换照片 1 -->
                 <div class="prop-card">
-                    <img src="https://images.unsplash.com/photo-1512917774080-9991f1c4c750?q=80&w=800" alt="物件1">
+                    <img src="1外観.png.jpg" alt="1外観">
                     <div class="info">
                         <span class="tag">#Executive Suite</span>
                         <h4>倶知安町山田56 プレミアム別荘</h4>
                         <a href="#" class="gold-text" style="font-weight: 700;">READ MORE →</a>
                     </div>
                 </div>
+                <!-- 替换照片 2 -->
                 <div class="prop-card">
-                    <img src="https://images.unsplash.com/photo-1518780664697-55e3ad937233?q=80&w=800" alt="物件2">
+                    <img src="Outside_View.jpg" alt="Outside View">
                     <div class="info">
                         <span class="tag">#Premium Suite</span>
                         <h4>ニセコ町近藤 デザイナーズ住宅</h4>
                         <a href="#" class="gold-text" style="font-weight: 700;">READ MORE →</a>
                     </div>
                 </div>
+                <!-- 替换照片 3 -->
                 <div class="prop-card">
-                    <img src="https://images.unsplash.com/photo-1449156001935-d2863cb32f30?q=80&w=800" alt="物件3">
+                    <img src="エントラス2.JPG" alt="エントラス2">
                     <div class="info">
                         <span class="tag">#Comfort Suite</span>
                         <h4>倶知安町樺山33 森の中の別荘</h4>
