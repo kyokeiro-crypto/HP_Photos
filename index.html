@@ -7,7 +7,6 @@
 
     <!-- 网页标签小图标 (Favicon) -->
     <link rel="icon" href="ambitious_logo_fix-01.png" type="image/png">
-    <!-- 苹果设备快捷图标 -->
     <link rel="apple-touch-icon" href="ambitious_logo_fix-01.png">
     
     <link href="https://fonts.googleapis.com/css2?family=Cormorant:wght@400;600&family=Noto+Sans+JP:wght@400;700&display=swap" rel="stylesheet">
@@ -15,6 +14,7 @@
     <style>
         :root {
             --gold: #D1AC00;
+            --gold-hover: #b59500;
             --black: #1a1a1a;
             --white: #ffffff;
             --gray-bg: #f8f8f8;
@@ -53,7 +53,7 @@
             background: linear-gradient(rgba(0,0,0,0.2), rgba(0,0,0,0.4)), url('1.jpg') center/cover;
             display: flex; align-items: flex-end; justify-content: center;
             text-align: center; color: var(--white);
-            padding-bottom: 8vh; /* PC端位置进一步降低 */
+            padding-bottom: 8vh;
         }
         .hero-inner h2 { 
             font-size: 1.8rem; 
@@ -61,65 +61,113 @@
             font-weight: 400; 
             font-family: var(--font-serif);
             text-shadow: 1px 1px 12px rgba(0,0,0,0.5);
-            white-space: nowrap; /* PC端强制单行 */
+            white-space: nowrap;
         }
 
-        /* --- Property Section --- */
-        .property-section { background: var(--gray-bg); padding: 60px 0 80px; }
+        /* --- Property Title & Search Area --- */
+        .property-main-title { text-align: center; padding-top: 60px; margin-bottom: 30px; }
+        .property-main-title h2 { font-family: var(--font-serif); font-size: 2.8rem; color: var(--gold); letter-spacing: 0.1em; font-weight: 400; }
+
+        .search-container {
+            max-width: 900px;
+            margin: 0 auto 50px;
+            display: flex;
+            gap: 10px;
+            padding: 0 40px;
+        }
+        .search-item { flex: 1; position: relative; }
+        .search-item select {
+            width: 100%; padding: 15px 20px; border: 1px solid #ddd;
+            background: #fff; font-size: 14px; appearance: none; cursor: pointer; border-radius: 4px;
+        }
+        .search-btn {
+            flex: 0.6; background: var(--gold); color: #fff; border: none;
+            font-weight: 700; font-size: 14px; cursor: pointer; border-radius: 4px;
+            position: relative; overflow: hidden; transition: background 0.3s ease;
+        }
+
+        /* 搜索按钮动画 */
+        .search-btn::before, .search-btn::after {
+            content: ""; position: absolute; width: 100%; height: 2px;
+            background: linear-gradient(90deg, transparent, var(--gold), transparent);
+            opacity: 0; transition: opacity 0.3s;
+        }
+        .search-btn::before { top: 0; left: -100%; }
+        .search-btn::after { bottom: 0; right: -100%; }
+        .search-btn:hover { background: var(--gold-hover); }
+        .search-btn:hover::before { opacity: 1; animation: moveLineRight 1.5s linear infinite; }
+        .search-btn:hover::after { opacity: 1; animation: moveLineLeft 1.5s linear infinite; }
+
+        @keyframes moveLineRight { 0% { left: -100%; } 100% { left: 100%; } }
+        @keyframes moveLineLeft { 0% { right: -100%; } 100% { right: 100%; } }
+
+        /* --- Property Section (滑动效果优化) --- */
+        .property-section { background: var(--gray-bg); padding: 20px 0 80px; }
         .container { max-width: 1400px; margin: 0 auto; padding: 0 40px; }
         
-        /* Property Title */
-        .property-main-title {
-            text-align: center;
-            margin-bottom: 50px;
-        }
-        .property-main-title h2 {
-            font-family: var(--font-serif);
-            font-size: 2.8rem;
-            color: var(--gold);
-            letter-spacing: 0.1em;
-            font-weight: 400;
-        }
-        .property-main-title p {
-            font-size: 0.8rem;
-            letter-spacing: 0.3em;
-            margin-top: -5px;
-            color: #666;
-            font-weight: 700;
+        .prop-flex-container { 
+            display: flex; 
+            align-items: center; /* 确保右侧箭头相对于物件卡片居中 */
+            gap: 15px; 
         }
 
-        .prop-flex-container { display: flex; align-items: flex-start; gap: 15px; }
-        .prop-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; flex-grow: 1; }
+        /* 改为Flex布局以支持5个物件滑动 */
+        .prop-grid { 
+            display: flex; 
+            gap: 20px; 
+            flex-grow: 1;
+            overflow-x: auto; 
+            scroll-snap-type: x mandatory;
+            scrollbar-width: none; /* 隐藏火狐滚动条 */
+            -ms-overflow-style: none; /* 隐藏IE滚动条 */
+        }
+        .prop-grid::-webkit-scrollbar { display: none; } /* 隐藏Chrome滚动条 */
 
-        .prop-card { background: var(--white); overflow: hidden; box-shadow: 0 5px 15px rgba(0,0,0,0.05); }
+        .prop-card { 
+            flex: 0 0 calc(25% - 15px); /* PC端默认显示4个左右 */
+            background: var(--white); 
+            overflow: hidden; 
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05); 
+            scroll-snap-align: start;
+        }
+        
         .prop-card .img-box { height: 190px; overflow: hidden; position: relative; background: #000; }
         .prop-card img { width: 100%; height: 100%; object-fit: cover; transition: 0.8s; filter: brightness(0.92) contrast(1.1) saturate(0.9); }
-        
         .prop-card .info { padding: 15px 20px 25px; }
         .prop-card .info span { color: var(--gold); font-size: 11px; font-weight: bold; margin-bottom: 8px; display: block; letter-spacing: 0.1em; }
         .prop-card h4 { font-size: 0.95rem; line-height: 1.6; font-weight: 700; height: 3.2em; overflow: hidden; color: #222; }
 
-        /* --- 箭头按钮 (对齐图片高度 190px) --- */
-        .more-btn-box { flex-shrink: 0; }
+        /* 箭头按钮样式调整 */
+        .more-btn-box { 
+            flex-shrink: 0; 
+            align-self: center; /* 物件整体居中对齐 */
+        }
         .btn-arrow {
             display: flex; align-items: center; justify-content: center;
-            width: 32px;  
-            height: 190px; /* 与 img-box 高度一致 */
+            width: 32px; 
+            height: 100px; /* 适当缩短以配合垂直居中的视觉 */
             border: 1px solid var(--gold);
-            background: #fff;
-            color: var(--gold);
-            font-size: 1.2rem;
-            transition: 0.3s;
-            cursor: pointer;
+            background: #fff; color: var(--gold); font-size: 1.2rem;
+            cursor: pointer; position: relative; overflow: hidden; transition: 0.3s;
         }
-        .btn-arrow:hover { background: var(--gold); color: #fff; }
+        .btn-arrow::before, .btn-arrow::after {
+            content: ""; position: absolute; width: 100%; height: 2px;
+            background: linear-gradient(90deg, transparent, var(--gold), transparent);
+            opacity: 0; transition: opacity 0.3s;
+        }
+        .btn-arrow::before { top: 0; left: -100%; }
+        .btn-arrow::after { bottom: 0; right: -100%; }
+        .btn-arrow:hover { background: #fdfdfd; }
+        .btn-arrow:hover::before { opacity: 1; animation: moveLineRight 1.5s linear infinite; }
+        .btn-arrow:hover::after { opacity: 1; animation: moveLineLeft 1.5s linear infinite; }
 
         footer { background: #1a1a1a; color: white; padding: 40px 0; text-align: center; font-size: 12px; }
 
         /* --- Responsive --- */
         @media (max-width: 1100px) {
-            .prop-grid { grid-template-columns: repeat(2, 1fr); }
+            .prop-card { flex: 0 0 calc(50% - 10px); } /* 平板显示2个 */
             header { padding: 0 20px; }
+            .search-container { padding: 0 20px; }
         }
 
         @media (max-width: 768px) {
@@ -132,21 +180,16 @@
             .hamburger { display: flex; } 
 
             .hero { height: 65vh; padding-bottom: 12vh; }
-            .hero-inner h2 { 
-                font-size: 1.2rem; 
-                white-space: normal; /* 手机端允许换行 */
-                line-height: 1.8; 
-            }
-
+            .hero-inner h2 { font-size: 1.2rem; white-space: normal; line-height: 1.8; }
             .property-main-title h2 { font-size: 2.2rem; }
             
+            .search-container { flex-direction: column; gap: 10px; margin-bottom: 30px; }
+            .search-btn { padding: 15px; }
+
             .container { padding: 0 0 0 20px; } 
-            .prop-flex-container { overflow-x: auto; scroll-snap-type: x mandatory; padding-bottom: 20px; -webkit-overflow-scrolling: touch; }
-            .prop-grid { display: flex; grid-template-columns: none; gap: 15px; }
-            .prop-card { flex: 0 0 80%; scroll-snap-align: start; }
-            
-            /* 手机端箭头也同步缩小 */
-            .btn-arrow { height: 160px; width: 25px; margin-right: 20px; }
+            .prop-flex-container { overflow-x: auto; padding-bottom: 20px; -webkit-overflow-scrolling: touch; }
+            .prop-card { flex: 0 0 80%; } /* 手机端显示80%宽度 */
+            .btn-arrow { height: 60px; width: 25px; margin-right: 20px; }
         }
     </style>
 </head>
@@ -177,41 +220,70 @@
 
     <section class="hero">
         <div class="hero-inner">
-            <!-- PC端单行，手机端自动换行 -->
             <h2>DESIGNING DREAMS BUILDING FUTURES</h2>
         </div>
     </section>
 
-    <!-- Property Title 区域 -->
+    <!-- Property Title -->
     <div class="property-main-title">
         <h2>Property</h2>
-        <p>REAL ESTATE</p>
+    </div>
+
+    <!-- 搜索栏 -->
+    <div class="search-container">
+        <div class="search-item">
+            <select name="type">
+                <option value="">All Types</option>
+                <option value="villa">Villa & Houses</option>
+                <option value="mansion">Mansion</option>
+                <option value="land">Land</option>
+            </select>
+        </div>
+        <div class="search-item">
+            <select name="area">
+                <option value="">All Areas</option>
+                <option value="niseko">Niseko</option>
+                <option value="kutchan">Kutchan</option>
+                <option value="sapporo">Sapporo</option>
+            </select>
+        </div>
+        <button class="search-btn">SEARCH</button>
     </div>
 
     <section id="property" class="property-section">
         <div class="container">
             <div class="prop-flex-container">
-                <div class="prop-grid">
+                <div class="prop-grid" id="propGrid">
+                    <!-- 物件 1 -->
                     <div class="prop-card">
                         <div class="img-box"><img src="1外観.png.jpg" alt="1外観"></div>
                         <div class="info"><span>#Villa&Houses</span><h4>ニセコ　S VILLA</h4></div>
                     </div>
+                    <!-- 物件 2 -->
                     <div class="prop-card">
                         <div class="img-box"><img src="Outside_View.jpg" alt="Outside View"></div>
                         <div class="info"><span>#Villa&Houses</span><h4>ニセコ町 別荘</h4></div>
                     </div>
+                    <!-- 物件 3 -->
                     <div class="prop-card">
                         <div class="img-box"><img src="エントラス2.JPG" alt="Entrance 2"></div>
                         <div class="info"><span>#Mansion</span><h4>札幌市 シティハウス大通東<br>ツインレジデンス</h4></div>
                     </div>
+                    <!-- 物件 4 -->
                     <div class="prop-card">
                         <div class="img-box"><img src="1羊蹄ビュー.jpg" alt="羊蹄ビュー"></div>
                         <div class="info"><span>#Land</span><h4>Niseko 曽我796土地</h4></div>
                     </div>
+                    <!-- 物件 5 (重复物件1以查看滑动效果) -->
+                    <div class="prop-card">
+                        <div class="img-box"><img src="1外観.png.jpg" alt="1外観 (Duplicate)"></div>
+                        <div class="info"><span>#Villa&Houses</span><h4>ニセコ　S VILLA (New)</h4></div>
+                    </div>
                 </div>
 
+                <!-- 细长箭头按钮 -->
                 <div class="more-btn-box">
-                    <a href="#" class="btn-arrow"> &gt; </a>
+                    <a href="javascript:void(0)" class="btn-arrow" onclick="scrollRight()"> &gt; </a>
                 </div>
             </div>
         </div>
@@ -220,6 +292,14 @@
     <footer>
         <p>Copyright © Ambitious All Rights Reserved.</p>
     </footer>
+
+    <!-- 简单的点击箭头向右滚动脚本 -->
+    <script>
+        function scrollRight() {
+            const grid = document.getElementById('propGrid');
+            grid.scrollBy({ left: 300, behavior: 'smooth' });
+        }
+    </script>
 
 </body>
 </html>
