@@ -21,21 +21,28 @@
             --font-sans: 'Noto Sans JP', sans-serif;
         }
 
-        /* 统一主站导航样式 */
+        /* --- 完美同步主站导航栏布局 --- */
         header {
             position: fixed; top: 0; width: 100%; height: 60px;
             background: rgba(255,255,255,0.98);
-            display: grid; grid-template-columns: 1fr auto 1fr;
+            display: grid; 
+            grid-template-columns: 1fr auto 1fr; /* 三列：左文字、中Logo、右菜单 */
             align-items: center; padding: 0 50px; z-index: 1000;
             border-bottom: 1px solid #eee;
         }
+
         .header-left .logo-text .en { font-family: var(--font-serif); font-size: 1.0rem; color: var(--gold); letter-spacing: 0.1em; display: block; font-weight: 600; }
         .header-left .logo-text .jp { font-size: 0.65rem; letter-spacing: 0.2rem; display: block; font-weight: 700; color: #333; }
-        .header-center .nav-logo { height: 40px; width: auto; }
-        .header-right nav ul { display: flex; gap: 25px; list-style: none; }
-        .header-right nav ul li a { font-size: 12px; font-weight: 700; letter-spacing: 0.08em; text-decoration: none; color: inherit; }
+        
+        .header-center .nav-logo { height: 40px; width: auto; cursor: pointer; transition: opacity 0.3s; }
+        .header-center .nav-logo:hover { opacity: 0.8; }
 
-        /* 页面内容偏移（避开固定导航栏） */
+        /* 右侧菜单强制靠右 */
+        .header-right { display: flex; justify-content: flex-end; }
+        .header-right nav ul { display: flex; gap: 25px; list-style: none; }
+        .header-right nav ul li a { font-size: 12px; font-weight: 700; letter-spacing: 0.08em; text-decoration: none; color: inherit; transition: color 0.3s; }
+        .header-right nav ul li a:hover { color: var(--gold); }
+
         body { padding-top: 60px; font-family: var(--font-sans); }
 
         .brand-gold { color: #D1AC00; }
@@ -46,19 +53,18 @@
             -webkit-text-fill-color: transparent;
         }
         
-        @media (max-width: 768px) {
-            header { height: 50px; padding: 0 20px; display: flex; justify-content: space-between; }
+        /* 移动端适配 */
+        @media (max-width: 1024px) {
+            header { grid-template-columns: 1fr auto; padding: 0 20px; }
             .header-left { display: none; }
-            .header-center { position: absolute; left: 50%; transform: translateX(-50%); }
-            .header-center .nav-logo { height: 32px; }
             .header-right nav { display: none; }
-            body { padding-top: 50px; }
+            .header-center { position: absolute; left: 50%; transform: translateX(-50%); }
         }
     </style>
 </head>
 <body class="bg-gray-50 text-gray-800">
 
-    <!-- 植入主站导航栏 -->
+    <!-- 顶部导航栏 (完全同步主页) -->
     <header>
         <div class="header-left">
             <div class="logo-text">
@@ -67,6 +73,7 @@
             </div>
         </div>
         <div class="header-center">
+            <!-- 点击Logo返回主页 -->
             <a href="index.html">
                 <img src="ambitious_logo_fix-03.png" alt="Ambitious" class="nav-logo">
             </a>
@@ -76,7 +83,7 @@
                 <ul>
                     <li><a href="index.html#concept">CONCEPT</a></li>
                     <li><a href="index.html#property">PROPERTY</a></li>
-                    <li><a href="company.html" style="color: #D1AC00;">COMPANY</a></li>
+                    <li><a href="company.html" style="color: var(--gold);">COMPANY</a></li>
                     <li><a href="index.html#contact">CONTACT</a></li>
                 </ul>
             </nav>
@@ -88,9 +95,9 @@
         <div class="container mx-auto px-6 text-center">
             <h2 class="text-sm font-bold tracking-widest brand-gold uppercase mb-2">Since 2022</h2>
             <h1 class="text-5xl md:text-6xl font-extrabold gradient-text mb-6">TEAM</h1>
-            <p class="max-w-2xl mx-auto text-gray-600 leading-relaxed">
+            <p class="max-w-3xl mx-auto text-gray-600 leading-relaxed">
                 2022年の設立以来、私たちはプロフェッショナリズム、誠実さ、迅速な対応を理念に掲げています。
-                北海道に根ざした経験豊富な専門家チームが、お客様を全力でサポートいたします。
+                北海道に根ざした経験豊富な専門家チームが、お客様の理想を形にするため全力でサポートいたします。
             </p>
         </div>
     </section>
@@ -99,7 +106,6 @@
     <section class="py-20 container mx-auto px-6">
         <h3 class="text-2xl font-bold mb-12 text-center border-b-2 border-gray-100 pb-4 inline-block mx-auto w-full">コアメンバー</h3>
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            
             <!-- 代表取締役 -->
             <div class="bg-white rounded-2xl shadow-lg overflow-hidden group border border-gray-100">
                 <div class="h-96 bg-gray-200 relative overflow-hidden">
@@ -108,10 +114,9 @@
                 <div class="p-6">
                     <h4 class="text-xl font-bold mb-1 text-gray-900">孫 姗姗</h4>
                     <p class="brand-gold font-semibold mb-3">代表取締役</p>
-                    <p class="text-sm text-gray-500 leading-relaxed">2022年に当社を設立。北海道での長年にわたる生活・ビジネス経験を活かし、地域に密着した視点とグローバルな戦略で会社を牽引しています。</p>
+                    <p class="text-sm text-gray-500 leading-relaxed">北海道での長年にわたる生活・ビジネス経験を活かし、地域に密着した視点とグローバルな戦略で会社を牽引しています。</p>
                 </div>
             </div>
-
             <!-- 取締役 -->
             <div class="bg-white rounded-2xl shadow-lg overflow-hidden group border border-gray-100">
                 <div class="h-96 bg-gray-200 relative">
@@ -123,7 +128,6 @@
                     <p class="text-sm text-gray-500 leading-relaxed">運営および市場開拓を統括。卓越した実行力と細やかなマネジメントで、地域社会への貢献と会社の成長を両立させています。</p>
                 </div>
             </div>
-
             <!-- 宅建士 -->
             <div class="bg-white rounded-2xl shadow-lg overflow-hidden group border border-gray-100">
                 <div class="h-96 bg-gray-200 relative">
@@ -132,57 +136,77 @@
                 <div class="p-6">
                     <h4 class="text-xl font-bold mb-1 text-gray-900">河野 秀樹</h4>
                     <p class="brand-gold font-semibold mb-3">宅地建物取引士</p>
-                    <p class="text-sm text-gray-500 leading-relaxed">不動産取引のスペシャリスト。すべての契約が法的基準を遵守し、お客様に安全と安心を提供することを第一に徹底しています。</p>
+                    <p class="text-sm text-gray-500 leading-relaxed">「任せてよかった！」と思っていただける存在であり続けることが私の目標です。安心と納得を提供するパートナーとして、誠実に対応致します。</p>
                 </div>
             </div>
-
             <!-- 社長補佐 -->
             <div class="bg-white rounded-2xl shadow-lg overflow-hidden group border border-gray-100">
                 <div class="h-96 bg-gray-200 relative">
-                    <img src="https://raw.githubusercontent.com/kyokeiro-crypto/HP_Photos/main/許.jpg" alt="社長補佐 兼 広告マネージャー 许馨露" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
+                    <img src="https://raw.githubusercontent.com/kyokeiro-crypto/HP_Photos/main/許.jpg" alt="社長補佐 兼 广告マネージャー 许馨露" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
                 </div>
                 <div class="p-6">
                     <h4 class="text-xl font-bold mb-1 text-gray-900">許 馨露</h4>
                     <p class="brand-gold font-semibold mb-3">社長補佐 兼 広告マネージャー</p>
-                    <p class="text-sm text-gray-500 leading-relaxed">経営陣のサポートから広告戦略の立案、SNSを通じたブランド構築までを統括。组织の円滑な運営と情報発信を担っています。</p>
+                    <p class="text-sm text-gray-500 leading-relaxed">金融・データ分析を基盤に、経営サポートから広告戦略・SNSによるブランド構築までを担い、国内外のお客様へ「理解できる・判断できる」不動産情報を提供。北海道での購入における信頼性の高い意思決定を支援します。</p>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Professional Consultants -->
+    <!-- Professional Consultants (新增专家成员) -->
     <section class="py-20 bg-gray-100">
         <div class="container mx-auto px-6">
-            <h3 class="text-2xl font-bold mb-12 text-center">専門家顧問チーム</h3>
-            <div class="flex flex-wrap justify-center gap-8">
+            <h3 class="text-2xl font-bold mb-12 text-center">専門家顧問・建築アドバイザー</h3>
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                
+                <!-- 建築アドバイザー (新增: 吉井 猛) -->
+                <div class="bg-white p-8 rounded-xl shadow-sm border-t-4 border-brand-gold">
+                    <div class="flex items-center mb-6">
+                        <div class="bg-yellow-50 p-4 rounded-full mr-4">
+                            <i class="fas fa-compass-drafting text-2xl brand-gold"></i>
+                        </div>
+                        <div>
+                            <h4 class="text-xl font-bold">吉井 猛 先生</h4>
+                            <p class="text-sm brand-gold font-bold">匠和建工株式会社 副社長 / 2級建築施工管理技士</p>
+                        </div>
+                    </div>
+                    <p class="text-gray-600 text-sm leading-relaxed">
+                        ニセコエリアで20年以上の豊富な施工実務経験を持つ建築のスペシャリスト。匠和建工の副社長として、土地の特性を最大限に活かした設計から、高品質な完全自由設計住宅の施工までをトータルに監修。確かな技術と地域特有の気候への深い理解に基づき、お客様の理想を形にする「安心の家づくり」を強力にバックアップします。
+                    </p>
+                </div>
+
                 <!-- 弁護士 -->
-                <div class="flex items-start bg-white p-8 rounded-xl shadow-sm w-full md:w-[48%] lg:w-[45%]">
-                    <div class="bg-yellow-50 p-4 rounded-full mr-6 shrink-0">
-                        <i class="fas fa-shield-halved text-2xl brand-gold"></i>
+                <div class="bg-white p-8 rounded-xl shadow-sm border-t-4 border-brand-gold">
+                    <div class="flex items-center mb-6">
+                        <div class="bg-yellow-50 p-4 rounded-full mr-4">
+                            <i class="fas fa-shield-halved text-2xl brand-gold"></i>
+                        </div>
+                        <div>
+                            <h4 class="text-xl font-bold">片岡 淳平 先生</h4>
+                            <p class="text-sm brand-gold font-bold">顧問弁護士（札幌シティ法律事務所）</p>
+                        </div>
                     </div>
-                    <div>
-                        <h4 class="text-xl font-bold mb-1">顧問弁護士</h4>
-                        <p class="font-bold text-gray-800 mb-1">片岡 淳平 先生</p>
-                        <p class="text-xs brand-gold mb-2 font-semibold">（札幌シティ法律事務所）</p>
-                        <p class="text-gray-600 text-sm leading-relaxed">
-                            契約書のリーガルチェックやコンプライアンス相談を担当。法的リスクを未然に防ぎ、透明性の高いビジネス環境を維持するとともに、お客様の権利を強固に守ります。
-                        </p>
-                    </div>
+                    <p class="text-gray-600 text-sm leading-relaxed">
+                        契約書のリーガルチェックやコンプライアンス相談を担当。法的リスクを未然に防ぎ、透明性の高いビジネス環境を維持するとともに、お客様の権利を強固に守り、安全な不動産取引を実現します。
+                    </p>
                 </div>
+
                 <!-- 行政書士 -->
-                <div class="flex items-start bg-white p-8 rounded-xl shadow-sm w-full md:w-[48%] lg:w-[45%]">
-                    <div class="bg-yellow-50 p-4 rounded-full mr-6 shrink-0">
-                        <i class="fas fa-file-signature text-2xl brand-gold"></i>
+                <div class="bg-white p-8 rounded-xl shadow-sm border-t-4 border-brand-gold">
+                    <div class="flex items-center mb-6">
+                        <div class="bg-yellow-50 p-4 rounded-full mr-4">
+                            <i class="fas fa-file-signature text-2xl brand-gold"></i>
+                        </div>
+                        <div>
+                            <h4 class="text-xl font-bold">山中 直人 先生</h4>
+                            <p class="text-sm brand-gold font-bold">顧問行政書士（アルバーズ法務事務所）</p>
+                        </div>
                     </div>
-                    <div>
-                        <h4 class="text-xl font-bold mb-1">顧問行政書士</h4>
-                        <p class="font-bold text-gray-800 mb-1">山中 直人 先生</p>
-                        <p class="text-xs brand-gold mb-2 font-semibold">（行政書士アルバーズ法務事務所）</p>
-                        <p class="text-gray-600 text-sm leading-relaxed">
-                            許認可申請やビザ手続きのスペシャリスト。複雑な行政手続きを的確にサポートし、スムーズな事業活動と定住を支援いたします。
-                        </p>
-                    </div>
+                    <p class="text-gray-600 text-sm leading-relaxed">
+                        許認可申請やビザ手続きのスペシャリスト。複雑な行政手続きを的确にサポートし、日本国内でのスムーズな事業活動や定住、資産管理を法務面から力強く支援いたします。
+                    </p>
                 </div>
+
             </div>
         </div>
     </section>
