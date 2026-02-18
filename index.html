@@ -22,7 +22,7 @@
     <style>
         :root {
             --gold: #D1AC00;
-            --gold-alpha: rgba(209, 172, 0, 0.92); /* 带透明度的金色 */
+            --gold-alpha: rgba(209, 172, 0, 0.75); /* 提高透明度：由0.92降至0.75 */
             --gold-hover: #9E8200;
             --black: #1a1a1a;
             --white: #ffffff;
@@ -50,60 +50,54 @@
         .header-left .logo-text .jp { font-size: 0.65rem; letter-spacing: 0.2rem; display: block; font-weight: 700; color: #333; }
         .header-center .nav-logo { height: 40px; width: auto; }
 
-        /* 右侧组合：翻译 + 汉堡菜单 */
         .header-right { display: flex; justify-content: flex-end; align-items: center; gap: 20px; }
         
-        /* 汉堡菜单样式 */
         .hamburger {
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            width: 25px;
-            height: 16px;
-            cursor: pointer;
-            z-index: 2001;
+            display: flex; flex-direction: column; justify-content: space-between;
+            width: 25px; height: 16px; cursor: pointer; z-index: 2001;
         }
-        .hamburger span {
-            display: block;
-            width: 100%;
-            height: 2px;
-            background-color: var(--black);
-            transition: 0.3s;
-        }
+        .hamburger span { display: block; width: 100%; height: 2px; background-color: var(--black); transition: 0.3s; }
 
-        /* --- 全屏覆盖菜单 --- */
+        /* --- 侧边抽屉菜单 (修改为1/3宽度) --- */
         .overlay-menu {
             position: fixed;
-            top: 0; right: -100%;
-            width: 100%; height: 100vh;
+            top: 0; 
+            right: -400px; /* 初始隐藏 */
+            width: 350px; /* PC端占据约1/3 */
+            height: 100vh;
             background: var(--gold-alpha);
             z-index: 2000;
             display: flex;
-            justify-content: center;
-            align-items: center;
-            transition: 0.5s ease;
+            flex-direction: column;
+            transition: 0.4s cubic-bezier(0.25, 1, 0.5, 1);
             overflow-y: auto;
+            box-shadow: -5px 0 15px rgba(0,0,0,0.1);
         }
         .overlay-menu.active { right: 0; }
         
-        .overlay-menu ul { text-align: center; padding: 50px 0; }
-        .overlay-menu ul li { margin: 15px 0; }
+        .overlay-menu ul { 
+            text-align: left; 
+            padding: 80px 40px; 
+        }
+        .overlay-menu ul li { 
+            margin: 10px 0; 
+            border-bottom: 1px solid rgba(255,255,255,0.2);
+            padding-bottom: 8px;
+        }
         .overlay-menu ul li a {
             color: white;
-            font-size: 1.2rem;
+            font-size: 1.0rem;
             font-weight: 700;
-            letter-spacing: 0.1em;
-            transition: 0.3s;
+            letter-spacing: 0.05em;
         }
         .overlay-menu ul li a:hover { opacity: 0.7; }
         
         .close-btn {
             position: absolute;
-            top: 20px; right: 50px;
-            font-size: 40px;
+            top: 15px; left: 20px;
+            font-size: 30px;
             color: white;
             cursor: pointer;
-            font-family: Arial;
         }
 
         /* --- Hero Section --- */
@@ -127,7 +121,7 @@
         .property-main-title { text-align: center; padding-top: 60px; margin-bottom: 30px; }
         .property-main-title h2 { font-family: var(--font-serif); font-size: 2.8rem; color: var(--gold); letter-spacing: 0.1em; font-weight: 400; }
 
-        /* --- 搜索栏 (更新为日语) --- */
+        /* --- 検索栏 --- */
         .search-container {
             max-width: 900px; margin: 0 auto 50px;
             display: flex; gap: 10px; padding: 0 40px;
@@ -142,7 +136,6 @@
             font-weight: 700; font-size: 14px; cursor: pointer; border-radius: 4px;
             position: relative; overflow: hidden; transition: all 0.4s ease;
         }
-        /* 搜索按钮动画保持 */
         .search-btn::before, .search-btn::after {
             content: ""; position: absolute; width: 100%; height: 2px;
             background: linear-gradient(90deg, transparent, #fff, transparent);
@@ -157,7 +150,7 @@
         @keyframes moveLineRight { 0% { left: -100%; } 100% { left: 100%; } }
         @keyframes moveLineLeft { 0% { right: -100%; } 100% { right: 100%; } }
 
-        /* --- Property Section (还原图片原样) --- */
+        /* --- Property Section --- */
         .property-section { background: var(--gray-bg); padding: 20px 0 80px; }
         .container { max-width: 1400px; margin: 0 auto; padding: 0 40px; }
         .prop-flex-container { display: flex; align-items: center; gap: 15px; }
@@ -169,14 +162,13 @@
 
         .prop-card { flex: 0 0 calc(25% - 15px); background: var(--white); overflow: hidden; box-shadow: 0 5px 15px rgba(0,0,0,0.05); scroll-snap-align: start; }
         .prop-card .img-box { height: 190px; overflow: hidden; position: relative; }
-        /* 去除滤镜处理，还原原图 */
         .prop-card img { width: 100%; height: 100%; object-fit: cover; transition: 0.8s; }
         
         .prop-card .info { padding: 15px 20px 25px; }
         .prop-card .info span { color: var(--gold); font-size: 11px; font-weight: bold; margin-bottom: 8px; display: block; letter-spacing: 0.1em; }
         .prop-card h4 { font-size: 0.95rem; line-height: 1.6; font-weight: 700; height: 3.2em; overflow: hidden; color: #222; }
 
-        /* --- 细长箭头按钮 --- */
+        /* --- 细长箭头按钮 (150px 居中) --- */
         .btn-arrow-box { flex-shrink: 0; }
         .btn-arrow {
             display: flex; align-items: center; justify-content: center;
@@ -201,7 +193,6 @@
         @media (max-width: 1100px) {
             .prop-card { flex: 0 0 calc(50% - 10px); }
             header { padding: 0 20px; }
-            .search-container { padding: 0 20px; }
         }
 
         @media (max-width: 768px) {
@@ -210,8 +201,11 @@
             .header-left { display: none; } 
             .header-center { position: absolute; left: 50%; transform: translateX(-50%); }
             .header-center .nav-logo { height: 32px; }
-            .close-btn { right: 20px; }
             
+            .overlay-menu { width: 80%; right: -85%; } /* 移动端占80% */
+            .overlay-menu.active { right: 0; }
+            .close-btn { left: auto; right: 20px; }
+
             .hero { height: 60vh; padding-bottom: 12vh; }
             .hero-inner h2 { font-size: 1.2rem; white-space: normal; line-height: 1.8; }
             .search-container { flex-direction: column; gap: 10px; margin-bottom: 30px; }
@@ -238,7 +232,7 @@
             <li><a href="#">不動産仲介</a></li>
             <li><a href="#">投資事業</a></li>
             <li><a href="#">特徴</a></li>
-            <li><a href="company.html">会社概要</a></li>
+            <li><a href="company.html">会社概要</a></li> <!-- 已链接至 company.html -->
             <li><a href="#">ブログ</a></li>
             <li><a href="#">コラム</a></li>
             <li><a href="#contact">お問い合わせ</a></li>
@@ -255,13 +249,11 @@
             </div>
         </div>
         <div class="header-center">
-            <a href="/"><img src="ambitious_logo_fix-03.png" alt="Ambitious" class="nav-logo"></a>
+            <!-- 点击Logo可回到主页 -->
+            <a href="index.html"><img src="ambitious_logo_fix-03.png" alt="Ambitious" class="nav-logo"></a>
         </div>
         <div class="header-right">
-            <!-- Google 翻译图标嵌入位置 -->
             <div id="google_translate_element"></div>
-            
-            <!-- 三横线扩展菜单按钮 -->
             <div class="hamburger" id="hamburger">
                 <span></span>
                 <span></span>
@@ -276,12 +268,10 @@
         </div>
     </section>
 
-    <!-- Property Title -->
     <div class="property-main-title">
         <h2>Property</h2>
     </div>
 
-    <!-- 搜索栏 (検索) -->
     <div class="search-container">
         <div class="search-item">
             <select name="type">
@@ -344,7 +334,6 @@
     </footer>
 
     <script>
-        // 菜单开关逻辑
         const hamburger = document.getElementById('hamburger');
         const overlayMenu = document.getElementById('overlayMenu');
         const closeBtn = document.getElementById('closeBtn');
@@ -357,14 +346,12 @@
             overlayMenu.classList.remove('active');
         });
 
-        // 导航自动关闭菜单
         document.querySelectorAll('.overlay-menu a').forEach(link => {
             link.addEventListener('click', () => {
                 overlayMenu.classList.remove('active');
             });
         });
 
-        // 滚动控制
         function scrollGrid(direction) {
             const grid = document.getElementById('propGrid');
             const scrollAmount = grid.clientWidth * 0.5;
