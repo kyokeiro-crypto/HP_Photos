@@ -11,10 +11,19 @@
     
     <link href="https://fonts.googleapis.com/css2?family=Cormorant:wght@400;600&family=Noto+Sans+JP:wght@400;700&display=swap" rel="stylesheet">
     
+    <!-- Google 翻译脚本 -->
+    <script type="text/javascript">
+        function googleTranslateElementInit() {
+            new google.translate.TranslateElement({pageLanguage: 'ja', layout: google.translate.TranslateElement.InlineLayout.SIMPLE}, 'google_translate_element');
+        }
+    </script>
+    <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+
     <style>
         :root {
             --gold: #D1AC00;
-            --gold-hover: #9E8200; /* 悬停时的深金色 */
+            --gold-alpha: rgba(209, 172, 0, 0.92); /* 带透明度的金色 */
+            --gold-hover: #9E8200;
             --black: #1a1a1a;
             --white: #ffffff;
             --gray-bg: #f8f8f8;
@@ -29,7 +38,7 @@
         ul { list-style: none; }
         a { text-decoration: none; color: inherit; transition: 0.3s ease; }
 
-        /* --- Header (60px) --- */
+        /* --- Header --- */
         header {
             position: fixed; top: 0; width: 100%; height: 60px;
             background: rgba(255,255,255,0.98);
@@ -40,12 +49,62 @@
         .header-left .logo-text .en { font-family: var(--font-serif); font-size: 1.0rem; color: var(--gold); letter-spacing: 0.1em; display: block; font-weight: 600; }
         .header-left .logo-text .jp { font-size: 0.65rem; letter-spacing: 0.2rem; display: block; font-weight: 700; color: #333; }
         .header-center .nav-logo { height: 40px; width: auto; }
-        .header-right { display: flex; justify-content: flex-end; }
-        nav ul { display: flex; gap: 25px; }
-        nav ul li a { font-size: 12px; font-weight: 700; letter-spacing: 0.08em; }
 
-        .hamburger { display: none; flex-direction: column; justify-content: space-between; width: 22px; height: 15px; cursor: pointer; }
-        .hamburger span { display: block; width: 100%; height: 1.5px; background-color: var(--black); }
+        /* 右侧组合：翻译 + 汉堡菜单 */
+        .header-right { display: flex; justify-content: flex-end; align-items: center; gap: 20px; }
+        
+        /* 汉堡菜单样式 */
+        .hamburger {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            width: 25px;
+            height: 16px;
+            cursor: pointer;
+            z-index: 2001;
+        }
+        .hamburger span {
+            display: block;
+            width: 100%;
+            height: 2px;
+            background-color: var(--black);
+            transition: 0.3s;
+        }
+
+        /* --- 全屏覆盖菜单 --- */
+        .overlay-menu {
+            position: fixed;
+            top: 0; right: -100%;
+            width: 100%; height: 100vh;
+            background: var(--gold-alpha);
+            z-index: 2000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: 0.5s ease;
+            overflow-y: auto;
+        }
+        .overlay-menu.active { right: 0; }
+        
+        .overlay-menu ul { text-align: center; padding: 50px 0; }
+        .overlay-menu ul li { margin: 15px 0; }
+        .overlay-menu ul li a {
+            color: white;
+            font-size: 1.2rem;
+            font-weight: 700;
+            letter-spacing: 0.1em;
+            transition: 0.3s;
+        }
+        .overlay-menu ul li a:hover { opacity: 0.7; }
+        
+        .close-btn {
+            position: absolute;
+            top: 20px; right: 50px;
+            font-size: 40px;
+            color: white;
+            cursor: pointer;
+            font-family: Arial;
+        }
 
         /* --- Hero Section --- */
         .hero {
@@ -68,7 +127,7 @@
         .property-main-title { text-align: center; padding-top: 60px; margin-bottom: 30px; }
         .property-main-title h2 { font-family: var(--font-serif); font-size: 2.8rem; color: var(--gold); letter-spacing: 0.1em; font-weight: 400; }
 
-        /* --- Search Area (金色按钮互动升级) --- */
+        /* --- 搜索栏 (更新为日语) --- */
         .search-container {
             max-width: 900px; margin: 0 auto 50px;
             display: flex; gap: 10px; padding: 0 40px;
@@ -83,8 +142,7 @@
             font-weight: 700; font-size: 14px; cursor: pointer; border-radius: 4px;
             position: relative; overflow: hidden; transition: all 0.4s ease;
         }
-
-        /* 搜索按钮行进线条动画 */
+        /* 搜索按钮动画保持 */
         .search-btn::before, .search-btn::after {
             content: ""; position: absolute; width: 100%; height: 2px;
             background: linear-gradient(90deg, transparent, #fff, transparent);
@@ -92,57 +150,37 @@
         }
         .search-btn::before { top: 0; left: -100%; }
         .search-btn::after { bottom: 0; right: -100%; }
-
-        .search-btn:hover { background: var(--gold-hover); transform: translateY(-1px); }
+        .search-btn:hover { background: var(--gold-hover); }
         .search-btn:hover::before { opacity: 0.8; animation: moveLineRight 1.5s linear infinite; }
         .search-btn:hover::after { opacity: 0.8; animation: moveLineLeft 1.5s linear infinite; }
 
         @keyframes moveLineRight { 0% { left: -100%; } 100% { left: 100%; } }
         @keyframes moveLineLeft { 0% { right: -100%; } 100% { right: 100%; } }
 
-        /* --- Property Section (左右双向滑动) --- */
+        /* --- Property Section (还原图片原样) --- */
         .property-section { background: var(--gray-bg); padding: 20px 0 80px; }
         .container { max-width: 1400px; margin: 0 auto; padding: 0 40px; }
-        
-        .prop-flex-container { 
-            display: flex; 
-            align-items: center; 
-            gap: 15px; 
-        }
-
+        .prop-flex-container { display: flex; align-items: center; gap: 15px; }
         .prop-grid { 
-            display: flex; 
-            gap: 20px; 
-            flex-grow: 1;
-            overflow-x: auto; 
-            scroll-snap-type: x mandatory;
-            scrollbar-width: none; 
-            -ms-overflow-style: none;
-            padding: 10px 0;
+            display: flex; gap: 20px; flex-grow: 1; overflow-x: auto; 
+            scroll-snap-type: x mandatory; scrollbar-width: none; -ms-overflow-style: none; padding: 10px 0;
         }
         .prop-grid::-webkit-scrollbar { display: none; }
 
-        .prop-card { 
-            flex: 0 0 calc(25% - 15px);
-            background: var(--white); 
-            overflow: hidden; 
-            box-shadow: 0 5px 15px rgba(0,0,0,0.05); 
-            scroll-snap-align: start;
-        }
+        .prop-card { flex: 0 0 calc(25% - 15px); background: var(--white); overflow: hidden; box-shadow: 0 5px 15px rgba(0,0,0,0.05); scroll-snap-align: start; }
+        .prop-card .img-box { height: 190px; overflow: hidden; position: relative; }
+        /* 去除滤镜处理，还原原图 */
+        .prop-card img { width: 100%; height: 100%; object-fit: cover; transition: 0.8s; }
         
-        .prop-card .img-box { height: 190px; overflow: hidden; position: relative; background: #000; }
-        .prop-card img { width: 100%; height: 100%; object-fit: cover; transition: 0.8s; filter: brightness(0.92) contrast(1.1) saturate(0.9); }
         .prop-card .info { padding: 15px 20px 25px; }
         .prop-card .info span { color: var(--gold); font-size: 11px; font-weight: bold; margin-bottom: 8px; display: block; letter-spacing: 0.1em; }
         .prop-card h4 { font-size: 0.95rem; line-height: 1.6; font-weight: 700; height: 3.2em; overflow: hidden; color: #222; }
 
-        /* --- 细长箭头按钮 (高度 150px) --- */
+        /* --- 细长箭头按钮 --- */
         .btn-arrow-box { flex-shrink: 0; }
         .btn-arrow {
             display: flex; align-items: center; justify-content: center;
-            width: 32px; 
-            height: 150px; /* 增加到原来的 3/2 */
-            border: 1px solid var(--gold);
+            width: 32px; height: 150px; border: 1px solid var(--gold);
             background: #fff; color: var(--gold); font-size: 1.2rem;
             cursor: pointer; position: relative; overflow: hidden; transition: 0.3s;
         }
@@ -153,7 +191,6 @@
         }
         .btn-arrow::before { top: 0; left: -100%; }
         .btn-arrow::after { bottom: 0; right: -100%; }
-        
         .btn-arrow:hover { background: #fafafa; }
         .btn-arrow:hover::before { opacity: 1; animation: moveLineRight 1.5s linear infinite; }
         .btn-arrow:hover::after { opacity: 1; animation: moveLineLeft 1.5s linear infinite; }
@@ -164,6 +201,7 @@
         @media (max-width: 1100px) {
             .prop-card { flex: 0 0 calc(50% - 10px); }
             header { padding: 0 20px; }
+            .search-container { padding: 0 20px; }
         }
 
         @media (max-width: 768px) {
@@ -172,23 +210,42 @@
             .header-left { display: none; } 
             .header-center { position: absolute; left: 50%; transform: translateX(-50%); }
             .header-center .nav-logo { height: 32px; }
-            .header-right nav { display: none; } 
-            .hamburger { display: flex; } 
-
+            .close-btn { right: 20px; }
+            
             .hero { height: 60vh; padding-bottom: 12vh; }
             .hero-inner h2 { font-size: 1.2rem; white-space: normal; line-height: 1.8; }
-            
             .search-container { flex-direction: column; gap: 10px; margin-bottom: 30px; }
             .search-btn { padding: 15px; }
-
-            .container { padding: 0 10px; } 
-            .prop-flex-container { overflow-x: auto; padding-bottom: 20px; -webkit-overflow-scrolling: touch; gap: 10px; }
             .prop-card { flex: 0 0 85%; }
-            .btn-arrow { height: 80px; width: 25px; } /* 手机端适度缩小 */
+            .btn-arrow { height: 80px; width: 25px; }
         }
     </style>
 </head>
 <body>
+
+    <!-- 扩展菜单遮罩层 -->
+    <div class="overlay-menu" id="overlayMenu">
+        <div class="close-btn" id="closeBtn">×</div>
+        <ul>
+            <li><a href="index.html">TOP</a></li>
+            <li><a href="#concept">コンセプト</a></li>
+            <li><a href="#property">施工事例</a></li>
+            <li><a href="#">よくある質問</a></li>
+            <li><a href="#">購入の流れ</a></li>
+            <li><a href="#">料金表</a></li>
+            <li><a href="#">注文住宅（別荘）</a></li>
+            <li><a href="#">リフォーム</a></li>
+            <li><a href="#">不動産仲介</a></li>
+            <li><a href="#">投資事業</a></li>
+            <li><a href="#">特徴</a></li>
+            <li><a href="company.html">会社概要</a></li>
+            <li><a href="#">ブログ</a></li>
+            <li><a href="#">コラム</a></li>
+            <li><a href="#contact">お問い合わせ</a></li>
+            <li><a href="#">プライバシーポリシー</a></li>
+            <li><a href="#">サイトマップ</a></li>
+        </ul>
+    </div>
 
     <header>
         <div class="header-left">
@@ -201,15 +258,15 @@
             <a href="/"><img src="ambitious_logo_fix-03.png" alt="Ambitious" class="nav-logo"></a>
         </div>
         <div class="header-right">
-            <nav>
-                <ul>
-                    <li><a href="#concept">CONCEPT</a></li>
-                    <li><a href="#property">PROPERTY</a></li>
-                    <li><a href="company.html">COMPANY</a></li>
-                    <li><a href="#contact" style="color: var(--gold);">CONTACT</a></li>
-                </ul>
-            </nav>
-            <div class="hamburger"><span></span><span></span><span></span></div>
+            <!-- Google 翻译图标嵌入位置 -->
+            <div id="google_translate_element"></div>
+            
+            <!-- 三横线扩展菜单按钮 -->
+            <div class="hamburger" id="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
         </div>
     </header>
 
@@ -224,11 +281,11 @@
         <h2>Property</h2>
     </div>
 
-    <!-- 搜索栏 -->
+    <!-- 搜索栏 (検索) -->
     <div class="search-container">
         <div class="search-item">
             <select name="type">
-                <option value="">All Types</option>
+                <option value="">物件種別</option>
                 <option value="villa">Villa & Houses</option>
                 <option value="mansion">Mansion</option>
                 <option value="land">Land</option>
@@ -236,52 +293,45 @@
         </div>
         <div class="search-item">
             <select name="area">
-                <option value="">All Areas</option>
+                <option value="">エリア</option>
                 <option value="niseko">Niseko</option>
                 <option value="kutchan">Kutchan</option>
                 <option value="sapporo">Sapporo</option>
             </select>
         </div>
-        <button class="search-btn">SEARCH</button>
+        <button class="search-btn">検索</button>
     </div>
 
     <section id="property" class="property-section">
         <div class="container">
             <div class="prop-flex-container">
-                <!-- 左箭头：用于向左滑动 -->
                 <div class="btn-arrow-box">
                     <a href="javascript:void(0)" class="btn-arrow" onclick="scrollGrid(-1)"> &lt; </a>
                 </div>
 
                 <div class="prop-grid" id="propGrid">
-                    <!-- 物件 1 -->
                     <div class="prop-card">
                         <div class="img-box"><img src="1外観.png.jpg" alt="1外観"></div>
                         <div class="info"><span>#Villa&Houses</span><h4>ニセコ　S VILLA</h4></div>
                     </div>
-                    <!-- 物件 2 -->
                     <div class="prop-card">
                         <div class="img-box"><img src="Outside_View.jpg" alt="Outside View"></div>
-                        <div class="info"><span>#Villa&Houses</span><h4>ニセコ町 別荘</h4></div>
+                        <div class="info"><span>#Villa&Houses</span><h4>ニセコ 別荘</h4></div>
                     </div>
-                    <!-- 物件 3 -->
                     <div class="prop-card">
                         <div class="img-box"><img src="エントラス2.JPG" alt="Entrance 2"></div>
-                        <div class="info"><span>#Mansion</span><h4>札幌市 シティハウス大通東<br>ツインレジデンス</h4></div>
+                        <div class="info"><span>#Mansion</span><h4>札幌 シティハウス大通東<br>ツインレジデンス</h4></div>
                     </div>
-                    <!-- 物件 4 -->
                     <div class="prop-card">
                         <div class="img-box"><img src="1羊蹄ビュー.jpg" alt="羊蹄ビュー"></div>
-                        <div class="info"><span>#Land</span><h4>Niseko 曽我796土地</h4></div>
+                        <div class="info"><span>#Land</span><h4>ニセコ 曽我796土地</h4></div>
                     </div>
-                    <!-- 物件 5 -->
                     <div class="prop-card">
                         <div class="img-box"><img src="1外観.png.jpg" alt="1外観 (Duplicate)"></div>
-                        <div class="info"><span>#Villa&Houses</span><h4>ニセコ　S VILLA (New)</h4></div>
+                        <div class="info"><span>#Villa&Houses</span><h4>(Sample)</h4></div>
                     </div>
                 </div>
 
-                <!-- 右箭头：用于向右滑动 -->
                 <div class="btn-arrow-box">
                     <a href="javascript:void(0)" class="btn-arrow" onclick="scrollGrid(1)"> &gt; </a>
                 </div>
@@ -294,10 +344,30 @@
     </footer>
 
     <script>
-        // 平滑滚动控制函数
+        // 菜单开关逻辑
+        const hamburger = document.getElementById('hamburger');
+        const overlayMenu = document.getElementById('overlayMenu');
+        const closeBtn = document.getElementById('closeBtn');
+
+        hamburger.addEventListener('click', () => {
+            overlayMenu.classList.add('active');
+        });
+
+        closeBtn.addEventListener('click', () => {
+            overlayMenu.classList.remove('active');
+        });
+
+        // 导航自动关闭菜单
+        document.querySelectorAll('.overlay-menu a').forEach(link => {
+            link.addEventListener('click', () => {
+                overlayMenu.classList.remove('active');
+            });
+        });
+
+        // 滚动控制
         function scrollGrid(direction) {
             const grid = document.getElementById('propGrid');
-            const scrollAmount = grid.clientWidth * 0.5; // 每次滑动屏幕宽度的一半
+            const scrollAmount = grid.clientWidth * 0.5;
             grid.scrollBy({
                 left: scrollAmount * direction,
                 behavior: 'smooth'
@@ -307,4 +377,3 @@
 
 </body>
 </html>
-
